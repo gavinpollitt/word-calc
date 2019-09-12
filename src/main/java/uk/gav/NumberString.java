@@ -1,15 +1,15 @@
 package uk.gav;
 
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-
 import uk.gav.expression.ExpressionHolder.Node;
 
+/**
+ * Class to provide the necessary conversions between digitised and language-based numerics.
+ * @author regen
+ *
+ */
 public class NumberString implements NodeEvaluator {
 
-	private static Map<Integer, NumberString> ALL_NUMBERS = new HashMap<>(10);
 	private final static String[] UNITS = new String[] {"ZERO","ONE","TWO","THREE","FOUR","FIVE","SIX","SEVEN","EIGHT","NINE"};
 	private final static String[] TEENS = new String[] {"TEN", "ELEVEN", "TWELVE", "THIRTEEN", "FOURTEEN", "FIFTEEN", "SIXTEEN", "SEVENTEEN", "EIGHTEEN", "NINETEEN"};
 	private final static String[] TENS = new String[] {"TWENTY","THIRTY","FORTY","FIFTY","SIXTY","SEVENTY", "EIGHTY", "NINETY"};
@@ -37,10 +37,14 @@ public class NumberString implements NodeEvaluator {
 	
 	@Override
 	public Evaluator getEvaluator(Node n) {
-		// TODO Auto-generated method stub
 		return () -> this;
 	}
 
+	/**
+	 * 
+	 * @param addNum The String version of a number (potentially with leading sign)
+	 * @return integer equivalent
+	 */
 	public static int convertToNumber(String addNum)  {
 		boolean hasSign = false;
 		//Check for negative number
@@ -105,6 +109,11 @@ public class NumberString implements NodeEvaluator {
 		return hasSign?-foundNum:foundNum;
 	}
 	
+	/**
+	 * 
+	 * @param intVal The integer version of the number to convert to language format
+	 * @return The word version of the provided integer
+	 */
 	public static String convertToString(int intVal)  {
 		boolean hasSign = false;
 		

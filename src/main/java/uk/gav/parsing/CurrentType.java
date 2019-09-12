@@ -4,6 +4,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * The various 'components' in an expression represented by their regec
+ * @author regen
+ *
+ */
 public enum CurrentType {
 
 	SIGN("[\\+-MmPp]"),

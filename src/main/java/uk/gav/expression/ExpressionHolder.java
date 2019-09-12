@@ -9,17 +9,24 @@ import uk.gav.NumberString;
 import uk.gav.OperatorFactory;
 import uk.gav.parsing.CurrentType;
 
+/** 
+ * Class holding the successfully parsed expression and ability to solve.
+ * @author regen
+ *
+ */
 public class ExpressionHolder {
 	private static Set<String> IGNORE_OPS = new HashSet<>(Arrays.asList("*","X"));
 	
 	private Node root;
 
+	/*
+	 * Dole out expression holder objects when required
+	 */
 	public static ExpressionHolder getInstance() {
 		return new ExpressionHolder();
 	}
 
-	private ExpressionHolder() {
-	}
+	private ExpressionHolder() {}
 
 	public ExpressionHolder addLeft(ExpressionHolder eh) {
 		this.root.left = eh.root;
@@ -41,6 +48,10 @@ public class ExpressionHolder {
 		return this;
 	}
 
+	/**
+	 * Construct a negation node to cater for conversion to negative
+	 * @return
+	 */
 	public ExpressionHolder negate() {
 		Node l = new LeafNode("-1");
 		Node o = new OpNode("*");
@@ -51,6 +62,10 @@ public class ExpressionHolder {
 		return this;
 	}
 	
+	/**
+	 * Trigger the solving of the expression
+	 * @return
+	 */
 	public NumberString solve() {
 		return this.root.evaluator.evaluate();
 	}
@@ -68,6 +83,12 @@ public class ExpressionHolder {
 
 	}
 
+	/**
+	 * Determine if a bracket is required when displaying the output
+	 * @param parent
+	 * @param child
+	 * @return
+	 */
 	private static boolean bracketRequired(Node parent, Node child) {
 		boolean br = false;
 		
@@ -86,6 +107,11 @@ public class ExpressionHolder {
 		
 	}
 	
+	/**
+	 * Extended toString to print the expression at this level.
+	 * @param n The node to print
+	 * @return the string version of this node and below
+	 */
 	private static String toString(Node n) {
 		String ss = "";
 		boolean bracket = false;
@@ -136,6 +162,11 @@ public class ExpressionHolder {
 		return ss;
 	}
 
+	/**
+	 * Node implemention with no children
+	 * @author regen
+	 *
+	 */
 	public static class LeafNode extends Node {
 		public LeafNode(final String v) {
 			this.value = v;
@@ -145,6 +176,11 @@ public class ExpressionHolder {
 		}
 	}
 
+	/**
+	 * Node implementation catering for an operator.
+	 * @author regen
+	 *
+	 */
 	public static class OpNode extends Node {
 		public OpNode(String o) {
 			if (o.equals("X")) {
@@ -155,6 +191,11 @@ public class ExpressionHolder {
 		}
 	}
 
+	/**
+	 * A Node is an element in the tree structure with up to two child nodes (left and right)
+	 * @author regen
+	 *
+	 */
 	public abstract static class Node {
 		protected String value;
 		protected Node left;

@@ -1,6 +1,11 @@
 package uk.gav.parsing;
 import java.util.Set;
 
+/**
+ * Class providing capability to scan character by character through an expression string
+ * @author regen
+ *
+ */
 public class InputScanner {
 	
 	private String input;
@@ -36,6 +41,10 @@ public class InputScanner {
 		return CurrentType.identify(this.getCurrent());
 	}
 	
+	/**
+	 * Skip any following whitespace before identifying next type
+	 * @return
+	 */
 	public Set<CurrentType> skipWS() {
 		Set<CurrentType> nextType = CurrentType.identify(this.getCurrent());
 

@@ -5,6 +5,11 @@ import java.util.Set;
 import uk.gav.NumberString;
 import uk.gav.expression.ExpressionHolder;
 
+/**
+ * Class responsible for taking a string expression a producing the expression tree based on the syntax model
+ * @author regen
+ *
+ */
 public class Parser {
 
 	private InputScanner s;
@@ -27,6 +32,11 @@ public class Parser {
 		eval("99/0");
 	}
 	
+	/**
+	 * Evaluate the provided expression string
+	 * @param exp
+	 * @throws Exception
+	 */
 	private static void eval(String exp) throws Exception {
 		Parser p = new Parser(exp);
 		ExpressionHolder eh = p.parse();
@@ -34,10 +44,21 @@ public class Parser {
 		System.out.println("Result::" + eh.solve());		
 	}
 
+	/**
+	 * Create a new parser instance based on the expression supplied
+	 * @param exp
+	 * @throws InvalidExpression
+	 */
 	public Parser(String exp) throws InvalidExpression {
 		this.s = new InputScanner((exp == null || exp.length() == 0) ? " " : exp);
 	}
+	
 
+	/** 
+	 * Perform the parsing of the expression from the root node down
+	 * @return The encompasssing expression holder
+	 * @throws Exception
+	 */
 	public ExpressionHolder parse() throws Exception {
 
 		ExpressionHolder eh = processExpression();
@@ -50,6 +71,11 @@ public class Parser {
 
 	}
 
+	/**
+	 * 
+	 * @return The expression at this level
+	 * @throws InvalidExpression
+	 */
 	public ExpressionHolder processExpression() throws InvalidExpression {
 		ExpressionHolder eh = processTerm();
 
